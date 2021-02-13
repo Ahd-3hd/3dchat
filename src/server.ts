@@ -5,10 +5,50 @@ import logging from './config/logging';
 import config from './config/config';
 import userRoutes from './routes/user';
 import mongoose from 'mongoose';
+import path from 'path';
 
 const NAMESPACE = 'Server';
 
 const router = express();
+
+/** Create the server */
+
+const httpServer = http.createServer(router);
+
+//socketio
+interface Rooms {
+  [key: string]: string[];
+}
+const rooms: Rooms = {};
+const socket = require('socket.io');
+const io = socket(httpServer);
+
+io.on('connection', (socket: any) => {
+  socket.on('join room', (roomID: string) => {
+    if (rooms[roomID]) {
+      rooms[roomID].push(socket.id);
+    } else {
+      rooms[roomID] = [socket.id];
+    }
+    const otherUser = rooms[roomID].find((id) => id !== socket.id);
+    if (otherUser) {
+      socket.emit('other user', otherUser);
+      socket.to(otherUser).emit('user joined', socket.id);
+    }
+  });
+
+  socket.on('offer', (payload: { target: any }) => {
+    io.to(payload.target).emit('offer', payload);
+  });
+
+  socket.on('answer', (payload: { target: any }) => {
+    io.to(payload.target).emit('answer', payload);
+  });
+
+  socket.on('ice-candidate', (incoming: { target: any; candidate: any }) => {
+    io.to(incoming.target).emit('ice-candidate', incoming.candidate);
+  });
+});
 
 /** Connect to mongodb */
 mongoose
@@ -49,6 +89,12 @@ router.use((req, res, next) => {
   next();
 });
 
+/** Serve Client */
+router.use(express.static(path.join(__dirname, 'client/build')));
+router.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
+
 /** Routes */
 router.use('/users', userRoutes);
 
@@ -60,9 +106,5 @@ router.use((req, res, next) => {
     message: error.message
   });
 });
-
-/** Create the server */
-
-const httpServer = http.createServer(router);
 
 httpServer.listen(config.server.port, () => logging.info(NAMESPACE, `Server running on ${config.server.hostname}:${config.server.port}`));
