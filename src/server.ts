@@ -6,10 +6,12 @@ import config from './config/config';
 import userRoutes from './routes/user';
 import mongoose from 'mongoose';
 import path from 'path';
+import cors from 'cors';
 
 const NAMESPACE = 'Server';
 
 const router = express();
+router.use(cors());
 
 /** Create the server */
 

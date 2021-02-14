@@ -6,7 +6,8 @@ const initialState: IUser = {
   username: '',
   authenticated: false,
   connection: [],
-  token: ''
+  token: '',
+  loading: false
 };
 
 const slice = createSlice({
@@ -14,9 +15,22 @@ const slice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(login.pending, (state, action) => {});
-    builder.addCase(login.fulfilled, (state, action) => {});
-    builder.addCase(login.rejected, (state, action) => {});
+    builder.addCase(login.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(login.fulfilled, (state, { payload }) => {
+      console.log(payload);
+      state.username = payload.user.username;
+      state.authenticated = true;
+      state.token = payload.token;
+      state.loading = false;
+    });
+    builder.addCase(login.rejected, (state, action) => {
+      state.loading = false;
+      state.authenticated = false;
+      state.username = '';
+      state.token = '';
+    });
   }
 });
 

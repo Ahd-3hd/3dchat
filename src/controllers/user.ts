@@ -46,6 +46,7 @@ const register = (req: Request, res: Response, next: NextFunction) => {
 };
 const login = (req: Request, res: Response, next: NextFunction) => {
   let { username, password } = req.body;
+  console.log(username, password);
   User.find({ username })
     .exec()
     .then((users) => {

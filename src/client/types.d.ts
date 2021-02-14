@@ -3,4 +3,5 @@ export interface IUser {
   authenticated: boolean;
   connection: string[];
   token: string;
+  loading: boolean;
 }
