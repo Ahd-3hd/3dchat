@@ -1,6 +1,7 @@
 import { Wrapper, UrlInput, Form, CopyButton, InputContainer, FormParagraph, Span } from './index.style';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import io from 'socket.io-client';
+import World from '../../World';
 
 const Room = (props: any) => {
   const userVideo = useRef<any>();
@@ -10,7 +11,7 @@ const Room = (props: any) => {
   const otherUser = useRef<any>();
   const userStream = useRef<any>();
   const [buttonLabel, setButtonLabel] = useState('Copy');
-  const [showForm, setShowForm] = useState(true);
+  const [showForm, setShowForm] = useState(false);
   const urlRef = useRef<any>();
   const copyUrl = (e: FormEvent) => {
     e.preventDefault();
@@ -27,8 +28,7 @@ const Room = (props: any) => {
       userStream.current = stream;
 
       socketRef.current = io.connect('/');
-      socketRef.current.emit('join room', props.match.params.roomID);
-
+      socketRef.current.emit('join room', window.location.href.split('room/')[1]);
       socketRef.current.on('other user', (userID: any) => {
         callUser(userID);
         otherUser.current = userID;
@@ -150,8 +150,9 @@ const Room = (props: any) => {
           </InputContainer>
         </Form>
       )}
-      <video autoPlay ref={userVideo} muted style={{ display: 'none' }} />
-      <video autoPlay ref={partnerVideo} muted style={{ display: 'none' }} />
+      <video autoPlay ref={userVideo} muted style={{ visibility: 'hidden' }} />
+      <video autoPlay ref={partnerVideo} muted style={{ visibility: 'hidden' }} />
+      <World myVid={userVideo} otherVideo={partnerVideo} />
     </Wrapper>
   );
 };
