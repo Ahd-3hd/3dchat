@@ -1,10 +1,15 @@
-const BasicPlane = ({ vidFeed, x, y }: { vidFeed: any; x: any; y: any }) => {
+import { useAspect } from '@react-three/drei';
+import { useFlexSize } from '@react-three/flex';
+import { useThree } from 'react-three-fiber';
+
+const BasicPlane = ({ vidFeed }: { vidFeed: any }) => {
+  const { size, viewport, aspect } = useThree();
   return (
-    <mesh position={[1, 1, 1]}>
-      <planeBufferGeometry args={[1, 1]} />
-      <meshToonMaterial>
+    <mesh>
+      <planeBufferGeometry args={[viewport.width < 7 ? aspect * 4 : aspect * 3, viewport.width < 7 ? aspect * 4 : aspect * 3]} />
+      <meshBasicMaterial>
         <videoTexture attach="map" args={[vidFeed.current]} />
-      </meshToonMaterial>
+      </meshBasicMaterial>
     </mesh>
   );
 };

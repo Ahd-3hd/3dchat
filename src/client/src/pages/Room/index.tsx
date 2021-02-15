@@ -150,8 +150,8 @@ const Room = (props: any) => {
           </InputContainer>
         </Form>
       )}
-      <video autoPlay ref={userVideo} muted style={{ visibility: 'hidden' }} />
-      <video autoPlay ref={partnerVideo} muted style={{ visibility: 'hidden' }} />
+      <video autoPlay ref={userVideo} muted style={{ display: 'none' }} />
+      <video autoPlay ref={partnerVideo} style={{ display: 'none' }} />
       <World myVid={userVideo} otherVideo={partnerVideo} />
     </Wrapper>
   );

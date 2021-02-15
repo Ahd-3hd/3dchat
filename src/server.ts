@@ -23,9 +23,14 @@ interface Rooms {
 }
 const rooms: Rooms = {};
 const socket = require('socket.io');
-const io = socket(httpServer);
+const io = socket(httpServer, {
+  cors: {
+    origin: '*'
+  }
+});
 
 io.on('connection', (socket: any) => {
+  console.log(rooms);
   socket.on('join room', (roomID: string) => {
     if (rooms[roomID]) {
       rooms[roomID].push(socket.id);

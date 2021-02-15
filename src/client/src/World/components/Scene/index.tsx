@@ -1,23 +1,22 @@
-import { useThree } from 'react-three-fiber';
-import { useAspect } from '@react-three/drei/';
+import { forceResize, useThree } from 'react-three-fiber';
 import { Flex, Box } from '@react-three/flex';
-import { Suspense } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import BasicPlane from '../BasicPlane';
 const Scene = ({ myVid, otherVid }: { myVid: any; otherVid: any }) => {
-  const { viewport } = useThree();
-
-  const [x, y] = useAspect('cover', viewport.width, viewport.height);
+  const [dir, setDir] = useState<'column' | 'row'>('row');
+  const { size, viewport, aspect } = useThree();
+  console.log(viewport.width);
 
   return (
-    <Flex justifyContent="space-between" alignItems="center" flexDirection="row">
-      <Box centerAnchor>
+    <Flex flexDirection={viewport.width < 7 ? 'column' : 'row'} alignItems="center" justifyContent="center" size={[0, 0, 0]} position={[0, 0, 0]}>
+      <Box margin={0.1} centerAnchor>
         <Suspense fallback={null}>
-          <BasicPlane vidFeed={myVid} x={1} y={y} />
+          <BasicPlane vidFeed={myVid} />
         </Suspense>
       </Box>
-      <Box centerAnchor>
+      <Box margin={0.1} centerAnchor>
         <Suspense fallback={null}>
-          <BasicPlane vidFeed={otherVid} x={2} y={y} />
+          <BasicPlane vidFeed={otherVid} />
         </Suspense>
       </Box>
     </Flex>
