@@ -10,7 +10,9 @@ export const Wrapper = styled.div`
   height: 100%; */
 `;
 
-export const EffectSelection = styled.select`
+export const EffectSelection = styled.select``;
+
+export const SelectionContainer = styled.div`
   position: fixed;
   z-index: 99999;
   top: 0;
