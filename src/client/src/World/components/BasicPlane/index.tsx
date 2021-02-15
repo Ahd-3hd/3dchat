@@ -20,7 +20,7 @@ const BasicPlane = ({ vidFeed, effect }: { vidFeed: any; effect: any }) => {
       <meshBasicMaterial>
         <videoTexture attach="map" args={[vidFeed.current]} />
       </meshBasicMaterial>
-      {renderEffects()}
+      {/* {renderEffects()} */}
     </mesh>
   );
 };
