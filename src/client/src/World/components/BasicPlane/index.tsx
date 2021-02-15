@@ -3,14 +3,14 @@ import { useFlexSize } from '@react-three/flex';
 import { useThree } from 'react-three-fiber';
 import { EffectComposer, DepthOfField, Bloom, Noise, Vignette } from '@react-three/postprocessing';
 import { useEffect, useRef } from 'react';
-import { EffectOne, EffectTwo } from './Effects';
+import { EffectOne, EffectTwo, EffectThree, EffectFour, EffectFive } from './Effects';
 import React from 'react';
 
 const BasicPlane = ({ vidFeed, effect }: { vidFeed: any; effect: any }) => {
   const { size, viewport, aspect } = useThree();
 
   const renderEffects = () => {
-    const effects = [EffectOne, EffectTwo];
+    const effects = [EffectOne, EffectTwo, EffectThree, EffectFour, EffectFive];
     return React.createElement(effects[parseInt(effect)]);
   };
 

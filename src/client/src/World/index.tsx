@@ -34,6 +34,9 @@ const World = ({ myVid, otherVideo }: { myVid: any; otherVideo: any }) => {
       <EffectSelection onChange={(e) => setEffect(e.target.value)}>
         <option value={0}>Effect One</option>
         <option value={1}>Effect Two</option>
+        <option value={2}>Effect Three</option>
+        <option value={3}>Effect Four</option>
+        <option value={4}>Effect Five</option>
       </EffectSelection>
     </Wrapper>
   );
