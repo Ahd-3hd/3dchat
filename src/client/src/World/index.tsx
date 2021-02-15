@@ -1,12 +1,11 @@
-import { Wrapper } from './index.style';
+import { Wrapper, EffectSelection } from './index.style';
 import { Canvas } from 'react-three-fiber';
 import Scene from './components/Scene';
-import { OrbitControls, Center, OrthographicCamera } from '@react-three/drei';
 import { useEffect, useState } from 'react';
-import { Camera } from 'three';
 
 const World = ({ myVid, otherVideo }: { myVid: any; otherVideo: any }) => {
   const [show, setShow] = useState(false);
+  const [effect, setEffect] = useState('0');
 
   useEffect(() => {
     setShow(true);
@@ -15,13 +14,7 @@ const World = ({ myVid, otherVideo }: { myVid: any; otherVideo: any }) => {
     <Wrapper>
       {show && (
         <Canvas
-          gl={{
-            alpha: true,
-            logarithmicDepthBuffer: true,
-            precision: 'lowp',
-            preserveDrawingBuffer: true,
-            antialias: true
-          }}
+          gl={{ powerPreference: 'high-performance', alpha: false, antialias: false, stencil: false, depth: false }}
           colorManagement
           shadowMap
           style={{
@@ -35,9 +28,13 @@ const World = ({ myVid, otherVideo }: { myVid: any; otherVideo: any }) => {
         >
           <ambientLight color="white" intensity={0.7} />
           <spotLight intensity={0.2} position={[70, 70, 70]} />
-          <Scene myVid={myVid} otherVid={otherVideo} />
+          <Scene myVid={myVid} otherVid={otherVideo} effect={effect} />
         </Canvas>
       )}
+      <EffectSelection onChange={(e) => setEffect(e.target.value)}>
+        <option value={0}>Effect One</option>
+        <option value={1}>Effect Two</option>
+      </EffectSelection>
     </Wrapper>
   );
 };

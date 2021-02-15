@@ -9,3 +9,10 @@ export const Wrapper = styled.div`
   width: 100%;
   height: 100%; */
 `;
+
+export const EffectSelection = styled.select`
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+`;
