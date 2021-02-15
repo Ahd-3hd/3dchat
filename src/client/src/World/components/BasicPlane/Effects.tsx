@@ -57,7 +57,3 @@ export const EffectFour = () => {
     </EffectComposer>
   );
 };
-
-export const EffectFive = () => {
-  return <EffectComposer></EffectComposer>;
-};

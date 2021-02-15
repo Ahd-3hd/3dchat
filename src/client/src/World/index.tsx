@@ -36,7 +36,6 @@ const World = ({ myVid, otherVideo }: { myVid: any; otherVideo: any }) => {
         <option value={1}>Effect Two</option>
         <option value={2}>Effect Three</option>
         <option value={3}>Effect Four</option>
-        <option value={4}>Effect Five</option>
       </EffectSelection>
     </Wrapper>
   );
