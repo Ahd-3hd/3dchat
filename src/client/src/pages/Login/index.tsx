@@ -1,8 +1,10 @@
 import { Wrapper, Form, InputGroup, Label, InputField, Button } from './index.style';
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
 import { login } from '../../store/user/thunks';
+import { Redirect } from 'react-router-dom';
+import Layout from '../../components/Layout';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -22,16 +24,20 @@ const Login = () => {
       password: ''
     });
   };
+
+  useEffect(() => {}, []);
+
+  if (userReducer.authenticated) return <Redirect to="/" />;
   return (
     <Wrapper>
       <Form onSubmit={handleSubmit}>
         <InputGroup>
           <Label htmlFor="username">Username:</Label>
-          <InputField type="text" placeholder="Username" name="username" onChange={(e) => setLoginData((prevState) => ({ ...prevState, username: e.target.value }))} />
+          <InputField value={loginData.username} type="text" placeholder="Username" name="username" onChange={(e) => setLoginData((prevState) => ({ ...prevState, username: e.target.value }))} />
         </InputGroup>
         <InputGroup>
           <Label htmlFor="password">Password:</Label>
-          <InputField type="password" placeholder="password" name="password" onChange={(e) => setLoginData((prevState) => ({ ...prevState, password: e.target.value }))} />
+          <InputField value={loginData.password} type="password" placeholder="password" name="password" onChange={(e) => setLoginData((prevState) => ({ ...prevState, password: e.target.value }))} />
         </InputGroup>
         <Button type="submit">{userReducer.loading ? 'loading' : 'Login'}</Button>
       </Form>

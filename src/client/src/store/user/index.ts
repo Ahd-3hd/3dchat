@@ -19,7 +19,6 @@ const slice = createSlice({
       state.loading = true;
     });
     builder.addCase(login.fulfilled, (state, { payload }) => {
-      console.log(payload);
       state.username = payload.user.username;
       state.authenticated = true;
       state.token = payload.token;
