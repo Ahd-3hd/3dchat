@@ -15,7 +15,7 @@ const World = ({ myVid, otherVideo }: { myVid: any; otherVideo: any }) => {
     <Wrapper>
       {show && (
         <Canvas
-          gl={{ powerPreference: 'high-performance', alpha: false, antialias: false, stencil: false, depth: false }}
+          gl={{ powerPreference: 'high-performance', alpha: true, antialias: false, stencil: false, depth: false }}
           colorManagement
           shadowMap
           style={{
