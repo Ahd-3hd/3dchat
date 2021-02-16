@@ -4,11 +4,11 @@ import { Suspense, useState, useEffect, useCallback } from 'react';
 import BasicPlane from '../BasicPlane';
 import CustomShaderOne from '../CustomShaderOne';
 import Particles from '../Particles';
+import WobblyBox from '../WobblyBox';
 const Scene = ({ myVid, otherVid, effect, envIndex }: { myVid: any; otherVid: any; effect: any; envIndex: any }) => {
   const [dir, setDir] = useState<'column' | 'row'>('row');
   const { size, viewport, aspect } = useThree();
 
-  const env = [BasicPlane, CustomShaderOne];
   const [state, setState] = useState(true);
   const renderer = useCallback(
     (feed: any) => {
@@ -19,6 +19,8 @@ const Scene = ({ myVid, otherVid, effect, envIndex }: { myVid: any; otherVid: an
           return <CustomShaderOne vidFeed={feed} />;
         case 2:
           return <Particles vidFeed={feed} />;
+        case 3:
+          return <WobblyBox vidFeed={feed} />;
         default:
           return null;
       }
